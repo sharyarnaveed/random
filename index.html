@@ -3,500 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Question</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #ffccd5, #ffafcc);
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden;
-        }
-
-        .container {
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            max-width: 90%;
-            width: 500px;
-            position: relative;
-            z-index: 10;
-            margin: 1rem;
-        }
-
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            color: #ff4d6d;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            color: #444;
-        }
-
-        .heart {
-            color: #ff4d6d;
-            font-size: 1.5rem;
-            display: inline-block;
-            animation: pulse 1s infinite;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-            position: relative;
-        }
-
-        .btn {
-            padding: 0.8rem 2rem;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            touch-action: manipulation;
-        }
-
-        .btn-yes {
-            background-color: #ff4d6d;
-            color: white;
-            box-shadow: 0 4px 8px rgba(255, 77, 109, 0.3);
-        }
-
-        .btn-yes:hover, .btn-yes:active {
-            background-color: #ff758f;
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
-        }
-
-        .btn-no {
-            background-color: #ccc;
-            color: #666;
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #f00;
-            border-radius: 50%;
-            animation: fall 5s linear forwards;
-            z-index: 5;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            max-width: 90%;
-            width: 350px;
-            text-align: center;
-            animation: fadeIn 0.3s;
-            margin: 1rem;
-        }
-
-        .modal-btn {
-            padding: 0.5rem 1.5rem;
-            margin-top: 1rem;
-            font-size: 1rem;
-            background-color: #ff4d6d;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-        }
-
-        #celebration {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .heart-float {
-            position: absolute;
-            font-size: 20px;
-            color: #ff4d6d;
-            user-select: none;
-            pointer-events: none;
-            animation: float 6s linear infinite;
-        }
-
-        #flower-left {
-            position: absolute;
-            bottom: -10px;
-            left: -10px;
-            width: 100px;
-            height: 100px;
-            font-size: 80px;
-            opacity: 0.6;
-            transform: rotate(-15deg);
-            z-index: 1;
-        }
-
-        #flower-right {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            width: 100px;
-            height: 100px;
-            font-size: 80px;
-            opacity: 0.6;
-            transform: rotate(15deg);
-            z-index: 1;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.3); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes fall {
-            to { transform: translateY(100vh); }
-        }
-
-        /* Mobile-specific styles */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            p {
-                font-size: 0.95rem;
-                margin-bottom: 0.8rem;
-            }
-            
-            .buttons {
-                gap: 0.8rem;
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                padding: 0.7rem 1.5rem;
-                font-size: 1rem;
-                width: 80%;
-                max-width: 200px;
-            }
-            
-            .container {
-                padding: 1.5rem;
-                width: 95%;
-                max-width: 350px;
-            }
-            
-            #flower-left, #flower-right {
-                width: 60px;
-                height: 60px;
-                font-size: 50px;
-            }
-            
-            .heart {
-                font-size: 1.3rem;
-            }
-            
-            .modal-content {
-                width: 90%;
-                max-width: 300px;
-                padding: 1.2rem;
-            }
-            
-            /* Celebration view adjustments */
-            .container h1 {
-                font-size: 2rem;
-            }
-            
-            .container .heart {
-                font-size: 1.5rem;
-            }
-        }
-
-        /* Add smaller screen adjustments */
-        @media (max-width: 360px) {
-            .container {
-                padding: 1.2rem;
-            }
-            
-            h1 {
-                font-size: 1.6rem;
-            }
-            
-            .btn {
-                padding: 0.6rem 1.2rem;
-            }
-        }
-    </style>
+    <title>Night Flowers Animation</title>
+    <link rel="stylesheet" href="./index.css">
 </head>
-<body>
-    <div id="flower-left">🌸</div>
-    <div id="flower-right">🌸</div>
-    
-    <div class="container">
-        <h1>Will You Be Mine?</h1>
-        <p>You make my heart skip a beat every time I see you. <span class="heart">❤️</span></p>
-        <p>I've fallen head over heels for you and there's something important I need to ask...</p>
-        <div class="buttons">
-            <button class="btn btn-yes" id="yesBtn">Yes</button>
-            <button class="btn btn-no" id="noBtn">No</button>
-        </div>
+<body class="not-loaded">
+  <div class="night"></div>
+  <div class="flowers">
+    <div class="flower flower--1">
+      <div class="flower__leafs flower__leafs--1">
+        <div class="flower__leaf flower__leaf--1"></div>
+        <div class="flower__leaf flower__leaf--2"></div>
+        <div class="flower__leaf flower__leaf--3"></div>
+        <div class="flower__leaf flower__leaf--4"></div>
+        <div class="flower__white-circle"></div>
+
+        <div class="flower__light flower__light--1"></div>
+        <div class="flower__light flower__light--2"></div>
+        <div class="flower__light flower__light--3"></div>
+        <div class="flower__light flower__light--4"></div>
+        <div class="flower__light flower__light--5"></div>
+        <div class="flower__light flower__light--6"></div>
+        <div class="flower__light flower__light--7"></div>
+        <div class="flower__light flower__light--8"></div>
+
+      </div>
+      <div class="flower__line">
+        <div class="flower__line__leaf flower__line__leaf--1"></div>
+        <div class="flower__line__leaf flower__line__leaf--2"></div>
+        <div class="flower__line__leaf flower__line__leaf--3"></div>
+        <div class="flower__line__leaf flower__line__leaf--4"></div>
+        <div class="flower__line__leaf flower__line__leaf--5"></div>
+        <div class="flower__line__leaf flower__line__leaf--6"></div>
+      </div>
     </div>
 
-    <div class="modal" id="confirmModal">
-        <div class="modal-content">
-            <h2>Are you sure?</h2>
-            <p>Please think again! My heart can't take it!</p>
-            <button class="modal-btn" id="okBtn">OK</button>
-        </div>
+    <div class="flower flower--2">
+      <div class="flower__leafs flower__leafs--2">
+        <div class="flower__leaf flower__leaf--1"></div>
+        <div class="flower__leaf flower__leaf--2"></div>
+        <div class="flower__leaf flower__leaf--3"></div>
+        <div class="flower__leaf flower__leaf--4"></div>
+        <div class="flower__white-circle"></div>
+
+        <div class="flower__light flower__light--1"></div>
+        <div class="flower__light flower__light--2"></div>
+        <div class="flower__light flower__light--3"></div>
+        <div class="flower__light flower__light--4"></div>
+        <div class="flower__light flower__light--5"></div>
+        <div class="flower__light flower__light--6"></div>
+        <div class="flower__light flower__light--7"></div>
+        <div class="flower__light flower__light--8"></div>
+
+      </div>
+      <div class="flower__line">
+        <div class="flower__line__leaf flower__line__leaf--1"></div>
+        <div class="flower__line__leaf flower__line__leaf--2"></div>
+        <div class="flower__line__leaf flower__line__leaf--3"></div>
+        <div class="flower__line__leaf flower__line__leaf--4"></div>
+      </div>
     </div>
 
-    <div id="celebration"></div>
+    <div class="flower flower--3">
+      <div class="flower__leafs flower__leafs--3">
+        <div class="flower__leaf flower__leaf--1"></div>
+        <div class="flower__leaf flower__leaf--2"></div>
+        <div class="flower__leaf flower__leaf--3"></div>
+        <div class="flower__leaf flower__leaf--4"></div>
+        <div class="flower__white-circle"></div>
 
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const modal = document.getElementById('confirmModal');
-        const okBtn = document.getElementById('okBtn');
-        const celebration = document.getElementById('celebration');
-        const container = document.querySelector('.container');
-        let attemptCount = 0;
-        
-        // Create floating hearts in background
-        function createFloatingHearts() {
-            const hearts = ['❤️', '💕', '💓', '💗', '💖'];
-            
-            for (let i = 0; i < 10; i++) {
-                setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.classList.add('heart-float');
-                    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-                    heart.style.left = Math.random() * 100 + 'vw';
-                    heart.style.opacity = Math.random() * 0.5 + 0.5;
-                    heart.style.fontSize = (Math.random() * 30 + 10) + 'px';
-                    heart.style.animationDuration = (Math.random() * 6 + 3) + 's';
-                    document.body.appendChild(heart);
-                    
-                    setTimeout(() => {
-                        heart.remove();
-                    }, 6000);
-                }, i * 300);
-            }
-        }
-        
-        createFloatingHearts();
-        setInterval(createFloatingHearts, 6000);
-        
-        // Update the moveNoButton function for better mobile handling
-        function moveNoButton(event) {
-            event.preventDefault();
-            const containerRect = container.getBoundingClientRect();
-            
-            // Get container dimensions, accounting for padding
-            const containerWidth = containerRect.width - 40; // Account for padding
-            const containerHeight = containerRect.height - 40;
-            
-            // Get button dimensions
-            const btnRect = noBtn.getBoundingClientRect();
-            const btnWidth = btnRect.width;
-            const btnHeight = btnRect.height;
-            
-            // Calculate safe area to ensure button stays fully visible
-            const maxX = containerWidth - btnWidth;
-            const maxY = containerHeight - btnHeight;
-            
-            // Ensure we have positive values with a minimum margin
-            const safeMaxX = Math.max(10, maxX);
-            const safeMaxY = Math.max(10, maxY);
-            
-            let newX = Math.random() * safeMaxX + 10;
-            let newY = Math.random() * safeMaxY + 10;
-            
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = newX + 'px';
-            noBtn.style.top = newY + 'px';
-        }
-        
-        noBtn.addEventListener('mouseover', moveNoButton);
-        noBtn.addEventListener('touchstart', moveNoButton, {passive: false});
-        
-        // Open confirmation modal when clicking "No"
-        noBtn.addEventListener('click', (event) => {
-            event.preventDefault();
-            attemptCount++;
-            
-            // Update message based on how many times they've tried
-            let message = "Please think again! My heart can't take it!";
-            if (attemptCount > 1) {
-                const messages = [
-                    "Are you really sure? Try again!",
-                    "I think you meant to click 'Yes'!",
-                    "Oops! Wrong button maybe?",
-                    "Let's try one more time...",
-                    "Perhaps reconsider? Pretty please?",
-                    "I promise to make you happy!",
-                    "Don't break my heart! 💔"
-                ];
-                message = messages[Math.min(attemptCount - 2, messages.length - 1)];
-            }
-            
-            document.querySelector('.modal-content p').textContent = message;
-            modal.style.display = 'flex';
-        });
-        
-        // Close modal and make button run away again
-        okBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-            
-            // Make the No button move again
-            const event = new Event('mouseover');
-            noBtn.dispatchEvent(event);
-            
-            // Make Yes button bigger after each rejection
-            const currentScale = 1 + attemptCount * 0.05;
-            yesBtn.style.transform = `scale(${Math.min(currentScale, 1.5)})`;
-            yesBtn.style.padding = `${0.8 + attemptCount * 0.05}rem ${2 + attemptCount * 0.1}rem`;
-        });
-        
-        // For the celebration view, adjust fireworks for mobile
-        function createFireworks() {
-            const fireworksContainer = document.getElementById('celebration');
-            fireworksContainer.style.display = 'block';
-            
-            // Reduce particle count on mobile for better performance
-            const isMobile = window.innerWidth < 600;
-            const particleCount = isMobile ? 30 : 100;
-            const particleSize = isMobile ? 10 : 15;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('confetti');
-                const colors = ['#ff4d6d', '#ffb3c1', '#ffd6e0', '#c1fffd', '#a2d2ff', '#ffc8dd'];
-                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.width = (Math.random() * particleSize + 5) + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.top = Math.random() * 20 - 50 + 'vh';
-                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                fireworksContainer.appendChild(particle);
-                
-                setTimeout(() => {
-                    particle.remove();
-                }, 5000);
-            }
-        }
-        
-        // Update the celebration view content for mobile
-        yesBtn.addEventListener('click', () => {
-            // Detect if mobile
-            const isMobile = window.innerWidth < 600;
-            
-            // Change display to celebration
-            document.querySelector('.container').innerHTML = `
-                <h1>Yay! 🎉</h1>
-                <p>Thank you for saying YES!</p>
-                <p class="heart">❤️❤️❤️</p>
-                <p>You've made me the happiest person alive!</p>
-                <div style="margin-top: 20px; font-size: ${isMobile ? '1.7rem' : '2rem'};">💍</div>
-            `;
-            
-            // Launch fireworks
-            createFireworks();
-            setInterval(createFireworks, 2000);
-            
-            // Make more hearts appear
-            setInterval(createFloatingHearts, 2000);
-            
-            // Remove flower decorations to focus on celebration
-            const flowerLeft = document.getElementById('flower-left');
-            const flowerRight = document.getElementById('flower-right');
-            if (flowerLeft) flowerLeft.remove();
-            if (flowerRight) flowerRight.remove();
-            
-            // Vibrate pattern for mobile devices (if supported)
-            if (navigator.vibrate) {
-                navigator.vibrate([100, 50, 100, 50, 100]);
-            }
-        });
-        
-        // Initialize - make sure the No button is in a good position
-        window.addEventListener('load', () => {
-            // Give slight delay to ensure elements are rendered
-            setTimeout(() => {
-                // Make sure button is in absolute positioning from start
-                noBtn.style.position = 'absolute';
-                const event = new Event('mouseover');
-                noBtn.dispatchEvent(event);
-            }, 100);
-        });
+        <div class="flower__light flower__light--1"></div>
+        <div class="flower__light flower__light--2"></div>
+        <div class="flower__light flower__light--3"></div>
+        <div class="flower__light flower__light--4"></div>
+        <div class="flower__light flower__light--5"></div>
+        <div class="flower__light flower__light--6"></div>
+        <div class="flower__light flower__light--7"></div>
+        <div class="flower__light flower__light--8"></div>
 
-        // Add these event listeners for better touch handling
-        document.addEventListener('DOMContentLoaded', () => {
-            // Prevent pinch zoom gestures on the page
-            document.addEventListener('touchmove', function(event) {
-                if (event.scale !== 1) {
-                    event.preventDefault();
-                }
-            }, { passive: false });
-            
-            // Ensure buttons work properly on touch devices
-            noBtn.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                // Trigger click event manually to ensure it works
-                noBtn.click();
-            });
-            
-            yesBtn.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                // Trigger click event manually to ensure it works
-                yesBtn.click();
-            });
-        });
-    </script>
+      </div>
+      <div class="flower__line">
+        <div class="flower__line__leaf flower__line__leaf--1"></div>
+        <div class="flower__line__leaf flower__line__leaf--2"></div>
+        <div class="flower__line__leaf flower__line__leaf--3"></div>
+        <div class="flower__line__leaf flower__line__leaf--4"></div>
+      </div>
+    </div>
+
+    <div class="grow-ans" style="--d:1.2s">
+      <div class="flower__g-long">
+        <div class="flower__g-long__top"></div>
+        <div class="flower__g-long__bottom"></div>
+      </div>
+    </div>
+
+    <div class="growing-grass">
+      <div class="flower__grass flower__grass--1">
+        <div class="flower__grass--top"></div>
+        <div class="flower__grass--bottom"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--1"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--2"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--3"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--4"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--5"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--6"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--7"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--8"></div>
+        <div class="flower__grass__overlay"></div>
+      </div>
+    </div>
+
+    <div class="growing-grass">
+      <div class="flower__grass flower__grass--2">
+        <div class="flower__grass--top"></div>
+        <div class="flower__grass--bottom"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--1"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--2"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--3"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--4"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--5"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--6"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--7"></div>
+        <div class="flower__grass__leaf flower__grass__leaf--8"></div>
+        <div class="flower__grass__overlay"></div>
+      </div>
+    </div>
+
+    <div class="grow-ans" style="--d:2.4s">
+      <div class="flower__g-right flower__g-right--1">
+        <div class="leaf"></div>
+      </div>
+    </div>
+
+    <div class="grow-ans" style="--d:2.8s">
+      <div class="flower__g-right flower__g-right--2">
+        <div class="leaf"></div>
+      </div>
+    </div>
+
+    <div class="grow-ans" style="--d:2.8s">
+      <div class="flower__g-front">
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--1">
+          <div class="flower__g-front__leaf"></div>
+        </div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--2">
+          <div class="flower__g-front__leaf"></div>
+        </div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--3">
+          <div class="flower__g-front__leaf"></div>
+        </div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--4">
+          <div class="flower__g-front__leaf"></div>
+        </div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--5">
+          <div class="flower__g-front__leaf"></div>
+        </div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--6">
+          <div class="flower__g-front__leaf"></div>
+        </div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--7">
+          <div class="flower__g-front__leaf"></div>
+        </div>
+        <div class="flower__g-front__leaf-wrapper flower__g-front__leaf-wrapper--8">
+          <div class="flower__g-front__leaf"></div>
+        </div>
+        <div class="flower__g-front__line"></div>
+      </div>
+    </div>
+
+    <div class="grow-ans" style="--d:3.2s">
+      <div class="flower__g-fr">
+        <div class="leaf"></div>
+        <div class="flower__g-fr__leaf flower__g-fr__leaf--1"></div>
+        <div class="flower__g-fr__leaf flower__g-fr__leaf--2"></div>
+        <div class="flower__g-fr__leaf flower__g-fr__leaf--3"></div>
+        <div class="flower__g-fr__leaf flower__g-fr__leaf--4"></div>
+        <div class="flower__g-fr__leaf flower__g-fr__leaf--5"></div>
+        <div class="flower__g-fr__leaf flower__g-fr__leaf--6"></div>
+        <div class="flower__g-fr__leaf flower__g-fr__leaf--7"></div>
+        <div class="flower__g-fr__leaf flower__g-fr__leaf--8"></div>
+      </div>
+    </div>
+
+    <div class="long-g long-g--0">
+      <div class="grow-ans" style="--d:3s">
+        <div class="leaf leaf--0"></div>
+      </div>
+      <div class="grow-ans" style="--d:2.2s">
+        <div class="leaf leaf--1"></div>
+      </div>
+      <div class="grow-ans" style="--d:3.4s">
+        <div class="leaf leaf--2"></div>
+      </div>
+      <div class="grow-ans" style="--d:3.6s">
+        <div class="leaf leaf--3"></div>
+      </div>
+    </div>
+
+    <div class="long-g long-g--1">
+      <div class="grow-ans" style="--d:3.6s">
+        <div class="leaf leaf--0"></div>
+      </div>
+      <div class="grow-ans" style="--d:3.8s">
+        <div class="leaf leaf--1"></div>
+      </div>
+      <div class="grow-ans" style="--d:4s">
+        <div class="leaf leaf--2"></div>
+      </div>
+      <div class="grow-ans" style="--d:4.2s">
+        <div class="leaf leaf--3"></div>
+      </div>
+    </div>
+
+    <div class="long-g long-g--2">
+      <div class="grow-ans" style="--d:4s">
+        <div class="leaf leaf--0"></div>
+      </div>
+      <div class="grow-ans" style="--d:4.2s">
+        <div class="leaf leaf--1"></div>
+      </div>
+      <div class="grow-ans" style="--d:4.4s">
+        <div class="leaf leaf--2"></div>
+      </div>
+      <div class="grow-ans" style="--d:4.6s">
+        <div class="leaf leaf--3"></div>
+      </div>
+    </div>
+
+    <div class="long-g long-g--3">
+      <div class="grow-ans" style="--d:4s">
+        <div class="leaf leaf--0"></div>
+      </div>
+      <div class="grow-ans" style="--d:4.2s">
+        <div class="leaf leaf--1"></div>
+      </div>
+      <div class="grow-ans" style="--d:3s">
+        <div class="leaf leaf--2"></div>
+      </div>
+      <div class="grow-ans" style="--d:3.6s">
+        <div class="leaf leaf--3"></div>
+      </div>
+    </div>
+
+    <div class="long-g long-g--4">
+      <div class="grow-ans" style="--d:4s">
+        <div class="leaf leaf--0"></div>
+      </div>
+      <div class="grow-ans" style="--d:4.2s">
+        <div class="leaf leaf--1"></div>
+      </div>
+      <div class="grow-ans" style="--d:3s">
+        <div class="leaf leaf--2"></div>
+      </div>
+      <div class="grow-ans" style="--d:3.6s">
+        <div class="leaf leaf--3"></div>
+      </div>
+    </div>
+
+    <div class="long-g long-g--5">
+      <div class="grow-ans" style="--d:4s">
+        <div class="leaf leaf--0"></div>
+      </div>
+      <div class="grow-ans" style="--d:4.2s">
+        <div class="leaf leaf--1"></div>
+      </div>
+      <div class="grow-ans" style="--d:3s">
+        <div class="leaf leaf--2"></div>
+      </div>
+      <div class="grow-ans" style="--d:3.6s">
+        <div class="leaf leaf--3"></div>
+      </div>
+    </div>
+
+    <div class="long-g long-g--6">
+      <div class="grow-ans" style="--d:4.2s">
+        <div class="leaf leaf--0"></div>
+      </div>
+      <div class="grow-ans" style="--d:4.4s">
+        <div class="leaf leaf--1"></div>
+      </div>
+      <div class="grow-ans" style="--d:4.6s">
+        <div class="leaf leaf--2"></div>
+      </div>
+      <div class="grow-ans" style="--d:4.8s">
+        <div class="leaf leaf--3"></div>
+      </div>
+    </div>
+
+    <div class="long-g long-g--7">
+      <div class="grow-ans" style="--d:3s">
+        <div class="leaf leaf--0"></div>
+      </div>
+      <div class="grow-ans" style="--d:3.2s">
+        <div class="leaf leaf--1"></div>
+      </div>
+      <div class="grow-ans" style="--d:3.5s">
+        <div class="leaf leaf--2"></div>
+      </div>
+      <div class="grow-ans" style="--d:3.6s">
+        <div class="leaf leaf--3"></div>
+      </div>
+    </div>
+  </div>
+  <script src="./index.js"></script>
 </body>
 </html>
